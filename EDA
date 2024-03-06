@@ -1,0 +1,62 @@
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load the Titanic dataset
+titanic_df = pd.read_csv('titanic.csv')
+
+# Display the first few rows of the dataset
+print(titanic_df.head())
+
+# Check for missing values
+print(titanic_df.isnull().sum())
+
+# Handling missing values
+# Fill missing values in 'Age' with the median age
+titanic_df['Age'].fillna(titanic_df['Age'].median(), inplace=True)
+
+# Fill missing values in 'Embarked' with the mode (most frequent value)
+titanic_df['Embarked'].fillna(titanic_df['Embarked'].mode()[0], inplace=True)
+
+# Drop 'Cabin' column due to too many missing values
+titanic_df.drop('Cabin', axis=1, inplace=True)
+
+# Check for missing values after handling
+print(titanic_df.isnull().sum())
+
+# Explore the relationships between variables
+# Survival rate by sex
+sns.countplot(x='Sex', hue='Survived', data=titanic_df)
+plt.title('Survival Count by Sex')
+plt.show()
+
+# Survival rate by passenger class
+sns.countplot(x='Pclass', hue='Survived', data=titanic_df)
+plt.title('Survival Count by Passenger Class')
+plt.show()
+
+# Survival rate by embarkation port
+sns.countplot(x='Embarked', hue='Survived', data=titanic_df)
+plt.title('Survival Count by Embarkation Port')
+plt.show()
+
+# Survival rate by age
+sns.histplot(x='Age', hue='Survived', data=titanic_df, bins=20, kde=True)
+plt.title('Survival Count by Age')
+plt.show()
+
+# Survival rate by number of siblings/spouses aboard
+sns.countplot(x='SibSp', hue='Survived', data=titanic_df)
+plt.title('Survival Count by Siblings/Spouses Aboard')
+plt.show()
+
+# Survival rate by number of parents/children aboard
+sns.countplot(x='Parch', hue='Survived', data=titanic_df)
+plt.title('Survival Count by Parents/Children Aboard')
+plt.show()
+
+# Fare distribution
+sns.histplot(x='Fare', data=titanic_df, bins=20, kde=True)
+plt.title('Fare Distribution')
+plt.show()
